@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrinuts - Invoice Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .invoice-section {
+            padding: 40px;
+            background-color: white;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            width: 80%;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .product-selection {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .product {
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .product img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .unit-price {
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #f4b41a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #333;
+            color: #f4b41a;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Nutrinuts Invoice Generator</h1>
+    </header>
+
+    <section class="invoice-section">
+        <h2>Customer Information</h2>
+        <label for="customerName">Customer Name:</label>
+        <input type="text" id="customerName" required>
+
+        <label for="contactNumber">Contact Number:</label>
+        <input type="text" id="contactNumber" required>
+
+        <label for="deliveryAddressSelect">Delivery Address:</label>
+        <select id="deliveryAddressSelect" onchange="updateDeliveryAddress()">
+            <option value="" disabled selected>Select Delivery Location</option>
+            <option value="Minna (Bosso)@1800">Minna (Bosso) @ ₦1,800</option>
+            <option value="Minna (Tunga)@1000">Minna (Tunga) @ ₦1,000</option>
+            <option value="Minna (Chanchager)@1800">Minna (Chanchager) @ ₦1,800</option>
+            <option value="Minna (City Gate)@1300">Minna (City Gate) @ ₦1,300</option>
+            <option value="Abuja (Jabi)@3000">Abuja (Jabi) @ ₦3,000</option>
+            <option value="Lagos (Oyinbo)@3000">Lagos (Oyinbo) @ ₦3,000</option>
+            <option value="Ibadan@4000">Ibadan @ ₦4,000</option>
+        </select>
+
+        <label for="deliveryAddress">Additional Delivery Address:</label>
+        <input type="text" id="deliveryAddress" placeholder="Type additional address here">
+    </section>
+
+    <section class="invoice-section">
+        <h2>Product Selection</h2>
+        <div class="product-selection">
+            <div class="product" onclick="selectProduct('Kulikuli')">
+                <img src="https://via.placeholder.com/100" alt="Kulikuli">
+                <p>Kulikuli</p>
+            </div>
+            <div class="product" onclick="selectProduct('Groundnut Oil')">
+                <img src="https://via.placeholder.com/100" alt="Groundnut Oil">
+                <p>Groundnut Oil</p>
+            </div>
+            <div class="product" onclick="selectProduct('Others')">
+                <img src="https://via.placeholder.com/100" alt="Others">
+                <p>Others</p>
+            </div>
+        </div>
+
+        <div class="product-type" id="kulikuliOptions" style="display: none;">
+            <label for="kulikuliType">Kulikuli Type:</label>
+            <select id="kulikuliType" onchange="updateUnitPrice()">
+                <option value="125g">125g @ ₦450</option>
+                <option value="250g">250g @ ₦1,000</option>
+                <option value="500g">500g @ ₦2,000</option>
+                <option value="750g">750g @ ₦2,200</option>
+                <option value="950g">950g @ ₦3,200</option>
+                <option value="1kg">1kg @ ₦3,600</option>
+                <option value="1.8kg">1.8kg @ ₦6,200</option>
+            </select>
+        </div>
+
+        <div class="product-type" id="oilOptions" style="display: none;">
+            <label for="oilType">Oil Type:</label>
+            <select id="oilType" onchange="updateOilUnitPrice()">
+                <option value="1 bottle">1 bottle @ ₦2,000</option>
+                <option value="1 liter">1 liter @ ₦3,000</option>
+            </select>
+        </div>
+
+        <div class="product-type" id="othersOptions" style="display: none;">
+            <label for="othersType">Other Product Type:</label>
+            <select id="othersType" onchange="updateOthersUnitPrice()">
+                <option value="Product A">Product A @ ₦1,500</option>
+                <option value="Product B">Product B @ ₦2,500</option>
+            </select>
+        </div>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" value="1" required onchange="updateAmount()">
+
+        <div class="unit-price">
+            <label for="unitPrice">Unit Price:</label>
+            <input type="text" id="unitPrice" value="450" readonly>
+        </div>
+
+        <div class="unit-price">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" value="450" readonly>
+        </div>
+    </section>
+
+    <section class="invoice-section">
+        <h2>Payment Information</h2>
+        <label for="waybillAmount">Waybill Amount:</label>
+        <input type="text" id="waybillAmount" value="0" readonly>
+
+        <label for="discount">Discount:</label>
+        <input type="text" id="discount" placeholder="Enter discount amount">
+
+        <label for="outstanding">Outstanding Amount:</label>
+        <input type="text" id="outstanding" placeholder="Enter outstanding amount" required>
+
+        <label for="total">Total Amount:</label>
+        <input type="text" id="total" value="0" readonly>
+
+        <button type="button" id="previewBtn">Preview Invoice</button>
+        <button type="button" id="downloadBtn">Download Invoice</button>
+    </section>
+
+    <div id="invoiceDisplay" style="margin: 20px auto; width: 80%;"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Nutrinuts. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let selectedUnitPrice = 450;
+
+        function selectProduct(product) {
+            const kulikuliOptions = document.getElementById('kulikuliOptions');
+            const oilOptions = document.getElementById('oilOptions');
+            const othersOptions = document.getElementById('othersOptions');
+
+            kulikuliOptions.style.display = 'none';
+            oilOptions.style.display = 'none';
+            othersOptions.style.display = 'none';
+            document.getElementById('quantity').value = 1;
+            document.getElementById('unitPrice').value = '';
+            document.getElementById('amount').value = '';
+
+            if (product === 'Kulikuli') {
+                kulikuliOptions.style.display = 'block';
+                selectedUnitPrice = 450; // Default to 125g
+                updateWaybillAmount();
+            } else if (product === 'Groundnut Oil') {
+                oilOptions.style.display = 'block';
+                selectedUnitPrice = 2000; // Default to 1 bottle
+                updateWaybillAmount();
+            } else {
+                othersOptions.style.display = 'block';
+                selectedUnitPrice = 1500; // Default for Others
+                updateWaybillAmount();
+            }
+            updateAmount();
+        }
+
+        function updateUnitPrice() {
+            const kulikuliType = document.getElementById('kulikuliType').value;
+            const prices = {
+                "125g": 450,
+                "250g": 1000,
+                "500g": 2000,
+                "750g": 2200,
+                "950g": 3200,
+                "1kg": 3600,
+                "1.8kg": 6200
+            };
+            selectedUnitPrice = prices[kulikuliType];
+            document.getElementById('unitPrice').value = selectedUnitPrice;
+            updateAmount();
+        }
+
+        function updateOilUnitPrice() {
+            const oilType = document.getElementById('oilType').value;
+            const prices = {
+                "1 bottle": 2000,
+                "1 liter": 3000
+            };
+            selectedUnitPrice = prices[oilType];
+            document.getElementById('unitPrice').value = selectedUnitPrice;
+            updateAmount();
+        }
+
+        function updateOthersUnitPrice() {
+            const othersType = document.getElementById('othersType').value;
+            const prices = {
+                "Product A": 1500,
+                "Product B": 2500
+            };
+            selectedUnitPrice = prices[othersType];
+            document.getElementById('unitPrice').value = selectedUnitPrice;
+            updateAmount();
+        }
+
+        function updateAmount() {
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const amount = selectedUnitPrice * quantity;
+            document.getElementById('amount').value = amount;
+            updateTotal();
+        }
+
+        function updateDeliveryAddress() {
+            const deliveryAddress = document.getElementById('deliveryAddressSelect').value.split('@');
+            const deliveryCost = parseInt(deliveryAddress[1]);
+            document.getElementById('waybillAmount').value = deliveryCost;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const waybillAmount = parseFloat(document.getElementById('waybillAmount').value) || 0;
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+            const outstanding = parseFloat(document.getElementById('outstanding').value) || 0;
+
+            const amount = parseFloat(document.getElementById('amount').value) || 0;
+            const totalAmount = amount + waybillAmount + outstanding - discount;
+
+            document.getElementById('total').value = totalAmount;
+        }
+
+        document.getElementById('previewBtn').addEventListener('click', function() {
+            const waybillAmount = parseFloat(document.getElementById('waybillAmount').value) || 0;
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+            const outstanding = parseFloat(document.getElementById('outstanding').value) || 0;
+            const totalAmount = parseFloat(document.getElementById('total').value) || 0;
+
+            document.getElementById('invoiceDisplay').innerHTML = `
+                <h3>Invoice</h3>
+                <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                <p><strong>Customer Name:</strong> ${document.getElementById('customerName').value}</p>
+                <p><strong>Contact Number:</strong> ${document.getElementById('contactNumber').value}</p>
+                <p><strong>Delivery Address:</strong> ${document.getElementById('deliveryAddressSelect').value} ${document.getElementById('deliveryAddress').value}</p>
+                <p><strong>Product:</strong> ${document.getElementById('kulikuliType') ? 'Kulikuli' : 'Groundnut Oil'}</p>
+                <p><strong>Unit Price:</strong> ₦${selectedUnitPrice}</p>
+                <p><strong>Quantity:</strong> ${document.getElementById('quantity').value}</p>
+                <p><strong>Waybill Amount:</strong> ₦${waybillAmount.toFixed(2)}</p>
+                <p><strong>Discount:</strong> ₦${discount.toFixed(2)}</p>
+                <p><strong>Outstanding Amount:</strong> ₦${outstanding.toFixed(2)}</p>
+                <p><strong>Total Amount:</strong> ₦${totalAmount.toFixed(2)}</p>
+            `;
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            alert('Download functionality will be implemented here.');
+        });
+    </script>
+
+</body>
+</html>
