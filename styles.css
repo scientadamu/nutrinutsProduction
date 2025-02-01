@@ -171,6 +171,8 @@ overflow: hidden;
 margin: 20px;
 flex: 1 1 calc(50% - 40px); /* 4 cards per row on large screens */
 transition: transform 0.3s, box-shadow 0.3s;
+cursor: pointer;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-card img {
@@ -419,7 +421,7 @@ flex: 1; /* Allows buttons to grow and fill available space */
 max-width: 30%; /* Restricts button width to a maximum */
 background-color: #5A3921;
 color: white;
-padding: 15px;
+padding: 5px;
 font-size: 1.2rem;
 border-radius: 30px;
 border: none;
@@ -513,7 +515,8 @@ object-fit: cover;
 }
 
 .product-details-grid .product-card:hover {
-transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .nav-buttons {
@@ -536,7 +539,13 @@ transition: background-color 0.3s;
 background-color: #2A9D8F;
 }
 
+#about .about-content, #account {
+    padding: 20px;
+}
 
+#about .about-text {
+    margin-bottom: 20px;
+}
 /* About Section */
 #about {
 padding: 60px 20px;
@@ -648,4 +657,204 @@ footer {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.product-type-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.product-type-card img {
+    width: 100%;
+    height: auto;
+}
+
+.product-type-card h3 {
+    font-size: 1.1rem;
+    color: #5A3921;
+}
+
+.product-type-card p.price {
+    font-size: 1.2rem;
+    color: #d9534f;
+}
+
+.product-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+/* Ensure all images inside product type cards have same height and width */
+.product-type-card img {
+    width: 100%;
+    height: 200px;  /* Set a fixed height for all images */
+    object-fit: cover;  /* Ensure the image covers the area without distorting */
+}
+
+/* Styling for product type cards */
+.product-type-card {
+    background-color: #f8f9fa;
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Ensure the content is aligned properly */
+
+/* Product Type Detail Form */
+.product-type-detail-container {
+    background-color: #FFF8F0;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-type-detail-container .product-type-title {
+    font-size: 2rem;
+    color: #5A3921;
+    text-align: center;
+}
+
+.product-type-detail-container .product-type-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.product-type-detail-container .product-type-form input {
+    padding: 10px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.product-type-detail-container .product-type-form .total-amount {
+    font-size: 1.5rem;
+    color: #E76F51;
+    font-weight: bold;
+}
+
+.product-type-detail-container .product-type-form .btn-add-item {
+    background-color: #5A3921;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.product-type-detail-container .product-type-form .btn-add-item:hover {
+    background-color: #A37C42;
+}
+
+/* Product Details Order Section */
+#product-details-order {
+    padding: 40px 20px;
+    background-color: #FFF8F0;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+#product-details-order .header h1 {
+    font-size: 2.5rem;
+    color: #5A3921;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#product-details-order .order-details-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+#product-details-order .order-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#product-details-order .order-item h3 {
+    font-size: 1.5rem;
+    color: #5A3921;
+    margin-top: 10px;
+}
+
+#product-details-order .order-item p {
+    font-size: 1.2rem;
+    color: #E76F51;
+    font-weight: bold;
+}
+
+#product-details-order .order-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+#product-details-order .order-form label {
+    font-size: 1.2rem;
+    color: #5A3921;
+}
+
+#product-details-order .order-form input {
+    padding: 10px;
+    font-size: 1.1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+}
+
+#product-details-order .order-form button {
+    padding: 10px;
+    background-color: #5A3921;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+}
+
+#product-details-order .order-form button:hover {
+    background-color: #A37C42;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.nav-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #264653;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav-buttons button:hover {
+    background-color: #2A9D8F;
 }

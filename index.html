@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,11 +26,9 @@
         <a href="#">Home</a>
         <a href="#products">Products</a>
         <a href="#about">About Us</a>
-        <a href="#contact">Contact</a>
         <a href="#account">Login</a>
     </div>
 </nav>
-
 
      <!-- Slider Section -->
      <section class="slider-container">
@@ -53,160 +52,201 @@
     </section>
 
 
-   <!-- Products Section -->
+
+
+
+ <!-- Products Section -->
 <div class="container" id="products">
     <h2 class="text-center" style="font-size: 2.5rem; color: #5A3921; margin-top: 60px;">Our Products</h2>
     <div class="product-grid">
         <!-- Kulikuli -->
-        <div class="product-card">
-            <img src="./Images/kuli 2.webp" alt="Kulikuli">
+        <div class="product-card" onclick="showProductDetails('kulikuli')">
+            <img src="../../Images/kuli-paint.jpeg" alt="Kulikuli">
             <div class="product-card-body">
                 <h5>Kulikuli</h5>
                 <p>A deliciously crunchy groundnut snack, roasted to perfection.</p>
-                <button class="read-more" onclick="showProductDetails('kulikuli')">Read More</button>
+            </div>
+        </div>
+
+        <!-- Groundnut Oil -->
+        <div class="product-card" onclick="showProductDetails('groundnutOil')">
+            <img src="../../Images/groundnut-oil.jpeg" alt="Groundnut Oil">
+            <div class="product-card-body">
+                <h5>Groundnut Oil</h5>
+                <p>Pure and healthy oil extracted from the finest groundnuts.</p>
             </div>
         </div>
     
         <!-- Dankowa -->
-        <div class="product-card">
-            <img src="./Images/Dankowa.jpg" alt="Dankowa">
+        <div class="product-card" onclick="showProductDetails('dankowa')">
+            <img src="../../Images/Dankuwa1.jpg" alt="Dankowa">
             <div class="product-card-body">
                 <h5>Dankowa</h5>
                 <p>A flavorful treat made with groundnuts and maize flour.</p>
-                <button class="read-more" onclick="showProductDetails('dankowa')">Read More</button>
             </div>
         </div>
     
         <!-- Yaji -->
-        <div class="product-card">
-            <img src="./Images/yaji.jpeg" alt="Yaji">
+        <div class="product-card" onclick="showProductDetails('yaji')">
+            <img src="../../Images/yaji.jpeg" alt="Yaji">
             <div class="product-card-body">
                 <h5>Yaji</h5>
                 <p>A spicy, aromatic seasoning blend that elevates our snacks.</p>
-                <button class="read-more" onclick="showProductDetails('yaji')">Read More</button>
             </div>
         </div>
     
-        <!-- Groundnut Oil -->
-        <div class="product-card">
-            <img src="./Images/groundnut.jpeg" alt="Groundnut Oil">
-            <div class="product-card-body">
-                <h5>Groundnut Oil</h5>
-                <p>Pure and healthy oil extracted from the finest groundnuts.</p>
-                <button class="read-more" onclick="showProductDetails('groundnutOil')">Read More</button>
-            </div>
-        </div>
+        
     </div>
 </div>
 
 <!-- Product Details Section -->
 <div class="container" id="product-details" style="display: none;">
     <div class="header">
-        <h1 id="product-title">Kulikuli Products</h1>
-        <p>Discover our range of Kulikuli products, crafted to perfection.</p>
+        <h1 id="product-title">Product Title</h1>
+        <p id="product-description">Product description...</p>
     </div>
-    <div class="product-details-grid"></div>
+    <div class="product-details-grid">
+        <!-- Product-specific details will be dynamically inserted here -->
+    </div>
     <div class="nav-buttons">
-        <button onclick="hideProductDetails()">Back</button>
+        <button onclick="hideProductDetails()">Back to Products</button>
     </div>
 </div>
 
+<!-- Product Details Order Section -->
+<div class="container" id="product-details-order" style="display: none;">
+    <div class="header">
+        <h1 id="order-title">Product Title</h1>
+        <p id="order-description">Product description...</p>
+    </div>
 
-   <!-- About Us Section -->
+    <!-- Product Image and Details -->
+    <div class="order-details-grid">
+        <div class="order-item">
+            <img id="order-image" src="../../Images/paint-robber.jpg" alt="Product Image">
+            <h3 id="order-name">Product Name</h3>
+            <p id="order-price">₦0</p>
+        </div>
+        <!-- Quantity Form and Price Calculation -->
+        <div class="order-form">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1" onchange="calculateTotal()">
+            <h3 id="total-price">₦0</h3>
+            <button onclick="addItemToOrder()">Add Item</button>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="nav-buttons">
+        <button onclick="hideProductOrderDetails()">Back</button>
+    >
+        <button onclick="hideProductOrderDetails()">Go to Other Product</button>
+    </div>
+</div>
+
+ <!--  Join Us Section -->
 <div class="container" id="about">
-    <h2>About Nutri-Nuts Productions</h2>
-    <div class="about-content">
-        <!-- About Text -->
-        <div class="about-text">
-            <p>
-                Since its founding on the 22nd of August, 2019, Nutri-Nuts Productions has steadily established itself as a reputable brand, earning recognition for delivering quality products that resonate with our customers. Our goal is to expand our operations to meet the increasing demand for our products and explore new market opportunities.
-            </p>
+    <div class="row">
+        <!-- About Us Section -->
+        <div class="col-lg-6">
+            <h2>About Nutri-Nuts Productions</h2>
+            <div class="about-content">
+                <!-- About Text -->
+                <div class="about-text">
+                    <p>
+                        Since its founding on the 22nd of August, 2019, Nutri-Nuts Productions has steadily established itself as a reputable brand, earning recognition for delivering quality products that resonate with our customers. Our goal is to expand our operations to meet the increasing demand for our products and explore new market opportunities.
+                    </p>
+                </div>
+                <!-- Map Container -->
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.4743113208845!2d6.57977501478185!3d9.607427391231727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1043ec49b8aa1d63%3A0x5d67de64868bc864!2sBlock%20390%2C%20Talba%20Housing%20Estate%2C%20Opposite%20Sanda%20College%2C%20Second%20Gate%2C%20Off%20Minna-Bida%20Road%2C%20Minna%2C%20Niger%20State!5e0!3m2!1sen!2sng!4v1634471104120!5m2!1sen!2sng"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
         </div>
-        <!-- Map Container -->
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.4743113208845!2d6.57977501478185!3d9.607427391231727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1043ec49b8aa1d63%3A0x5d67de64868bc864!2sBlock%20390%2C%20Talba%20Housing%20Estate%2C%20Opposite%20Sanda%20College%2C%20Second%20Gate%2C%20Off%20Minna-Bida%20Road%2C%20Minna%2C%20Niger%20State!5e0!3m2!1sen!2sng!4v1634471104120!5m2!1sen!2sng"
-                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+        <!-- Join Us Section -->
+        <div class="col-lg-6">
+            <div class="container" id="account">
+                <br />
+                <h2 id="formHeading">Join Us</h2>
+                <br />
+                <div class="button-container">
+                    <button class="btn-loadForm" id="login-link">Login</button>
+                    <button class="btn-loadForm" id="signup-link">Sign Up</button>
+                    <button class="btn-loadForm" id="contact-link">Contact Us</button>
+                </div>
+                <div class="tab-content">
+                    <!-- Login Form -->
+                    <div class="form-container" id="loginForm">
+                        <h2>Login</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Username *</label>
+                                <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password *</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn-register">Login </button> <hr/>
+                            <button  class="btn-register"  id="forgot-password-link">Forgot Password?</button>
+                        </form>
+                    </div>
+
+                    <!-- Sign Up Form -->
+                    <div id="signupForm" class="form-container" style="display: none;">
+                        <h2>Sign Up</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="email-signup">Email *</label>
+                                <input type="email" class="form-control" id="email-signup" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password-signup">Password *</label>
+                                <input type="password" class="form-control" id="password-signup" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="btn-register">Sign Up</button>
+                        </form>
+                    </div>
+
+                    <!-- Forgot Password Form -->
+                    <div id="resetForm" class="form-container" style="display: none;">
+                        <h2>Reset Password</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="email-reset">Email *</label>
+                                <input type="email" class="form-control" id="email-reset" placeholder="Enter your email" required>
+                            </div>
+                            <button type="submit" class="btn-register">Reset Password</button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Us Form -->
+                    <div id="contactForm" class="form-container" style="display: none;">
+                        <h2>Contact Us</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="contact-name">Name *</label>
+                                <input type="text" class="form-control" id="contact-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email *</label>
+                                <input type="email" class="form-control" id="contact-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-message">Message *</label>
+                                <textarea class="form-control" id="contact-message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-register">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
-    <!-- Contact Section  -->
-    <div id="contact" class="container" style="margin-top: 60px;">
-        <h2 class="text-center" style="font-size: 2.5rem; color: #5A3921;">Contact Us</h2>
-        <form action="" method="POST">
-            <div class="form-group">
-                <label for="name">Name *</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message *</label>
-                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-        </form>
-    </div>
-
-<!-- Account Section -->
-<div class="container" id="account">
-    <br />
-    <h2 id="formHeading">Join Us</h2>
-    <br />
-    <div class="button-container">
-        <button class="btn-loadForm" id="login-link">Login</button>
-        <button class="btn-loadForm" id="signup-link">Sign Up</button>
-        <button class="btn-loadForm" id="forgot-password-link">Forgot Password?</button>
-    </div>
-    <div class="tab-content">
-        <!-- Login Form -->
-        <div class="form-container" id="loginForm">
-            <h2>Login</h2>
-            <form>
-                <div class="form-group">
-                    <label for="username">Username *</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password *</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                </div>
-                <button type="submit" class="btn-register">Login</button>
-            </form>
-        </div>
-
-        <!-- Sign Up Form -->
-        <div id="signupForm" class="form-container" style="display: none;">
-            <h2>Sign Up</h2>
-            <form>
-                <div class="form-group">
-                    <label for="email-signup">Email *</label>
-                    <input type="email" class="form-control" id="email-signup" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password-signup">Password *</label>
-                    <input type="password" class="form-control" id="password-signup" placeholder="Enter your password" required>
-                </div>
-                <button type="submit" class="btn-register">Sign Up</button>
-            </form>
-        </div>
-
-        <!-- Forgot Password Form -->
-        <div id="resetForm" class="form-container" style="display: none;">
-            <h2>Reset Password</h2>
-            <form>
-                <div class="form-group">
-                    <label for="email-reset">Email *</label>
-                    <input type="email" class="form-control" id="email-reset" placeholder="Enter your email" required>
-                </div>
-                <button type="submit" class="btn-register">Reset Password</button>
-            </form>
-        </div>
-    </div>
-</div>
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Nutri-Nuts Productions. All rights reserved.</p>
