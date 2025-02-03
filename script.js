@@ -173,6 +173,7 @@ const productData = {
             },
         ],
     },
+    // other products...
 };
 
 // Show product details
@@ -208,12 +209,13 @@ function showProductDetails(productKey) {
 function hideProductDetails() {
     document.getElementById("product-details").style.display = "none";
     document.getElementById("products").style.display = "block";
+    aboutSection.style.display = 'block';
 }
 
 // Show product order details when a product is clicked
 function showProductOrderDetails(productId) {
     // Find the selected product by id
-    let selectedProduct;
+    let selectedProduct=null;
     for (const category in productData) {
         selectedProduct = productData[category].products.find((product) => product.id === productId);
         if (selectedProduct) break;
@@ -226,20 +228,34 @@ function showProductOrderDetails(productId) {
     document.getElementById('order-price').innerText = selectedProduct.price;
     document.getElementById('order-image').src = selectedProduct.img;
 
-    // Show the order section
+    // Show the product details order section
     const orderForm = document.getElementById('product-details-order');
     orderForm.style.display = 'block';
+
+    // Hide the about section when product details order is displayed
+    const aboutSection = document.getElementById('about');
+    aboutSection.style.display = 'none';
 
     // Scroll to the order form smoothly
     orderForm.scrollIntoView({ behavior: 'smooth' });
 
     // Focus on the quantity input field in the order form
     document.getElementById('quantity').focus();
+    // Optionally hide the product details section (if needed)
+    hideProductDetails();
+    document.getElementById('about').style.display = 'block';
 }
 
-// Hide the product order details section
+// document.getElementById('aboutSection').style.display = 'block';
+
+
+// Hide the product order details section and enable scrolling
 function hideProductOrderDetails() {
-    document.getElementById('product-details-order').style.display = 'none';
+    // document.getElementById('product-details-order').style.display = 'none';
+    document.getElementById('about').style.display = 'block';
+
+    // Re-enable scrolling when order form is hidden
+    document.body.style.overflow = 'auto';
 }
 
 // Calculate total price based on quantity
@@ -254,13 +270,210 @@ function calculateTotal() {
 
     // Update the total price in the display, formatted with commas
     document.getElementById('total-price').innerText = `₦${totalPrice.toLocaleString()}`;
+    
 }
 
 // Add item to order (for demonstration, logging it to console)
+let orderItems = [];
+let orderCount = 0;
+
 function addItemToOrder() {
     const productName = document.getElementById('order-name').innerText;
+    const productType = document.getElementById('order-description').innerText;  // assuming 'description' refers to product type
     const quantity = document.getElementById('quantity').value;
-    const totalAmount = document.getElementById('total-price').innerText;
+    const unitPrice = parseInt(document.getElementById('order-price').innerText.replace("₦", "").replace(",", ""));
+    const amount = quantity * unitPrice;
 
-    console.log(`Added ${productName} (Quantity: ${quantity}, Total: ${totalAmount}) to the order.`);
+    // Create the new item for the order table
+    orderItems.push({
+        serial: orderCount + 1,  // Increment serial number
+        product: productName,
+        productType: productType,
+        quantity: quantity,
+        price: unitPrice,
+        amount: amount
+    });
+
+    // Increment the order count (to keep serial numbers unique)
+    orderCount++;
+
+    // Update the table display
+    updateTable();
+
+    // Show the order table (hidden initially)
+    document.getElementById('orderTableSection').style.display = 'block';
+
+    // Scroll to the order table smoothly
+    const tableSection = document.getElementById('orderTableSection');
+    tableSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Hide product type and return to product section
+    document.getElementById('product-details').style.display = 'none';
+    document.getElementById('products').style.display = 'block';
+
+    // Focus on the order table to show the updated content
+    document.getElementById('orderTable').focus();
+
+    // Hide and reset product order details form
+    hideProductOrderDetails();
+    resetOrderForm();
 }
+
+// Hide the product order details section and enable scrolling
+function hideProductOrderDetails() {
+    // Hide the product order details form
+    document.getElementById('product-details-order').style.display = 'none';
+
+    // Re-enable scrolling when order form is hidden
+    document.body.style.overflow = 'auto';
+}
+
+// Reset the order form to default values (reset quantity and amount)
+function resetOrderForm() {
+    document.getElementById('quantity').value = 1; // Reset quantity to 1
+    document.getElementById('total-price').innerText = `₦${document.getElementById('order-price').innerText.replace("₦", "")}`; // Set total amount equal to price
+}
+
+// Set the default amount in the order form to equal the price if quantity is 1
+function calculateTotal() {
+    const quantity = document.getElementById('quantity').value;
+
+    // Get the product price (without the currency symbol and commas)
+    const unitPrice = parseInt(document.getElementById('order-price').innerText.replace("₦", "").replace(",", ""));
+
+    // Calculate the total price
+    const totalPrice = quantity * unitPrice;
+
+    // Update the total price in the display, formatted with commas
+    document.getElementById('total-price').innerText = `₦${totalPrice.toLocaleString()}`;
+}
+
+// Back button to return to the product details page and reset form
+function backToProductDetails() {
+    // Hide product order details
+    document.getElementById('product-details-order').style.display = 'none';
+
+    // Show product details and reset quantity
+    document.getElementById('product-details').style.display = 'block';
+    document.getElementById('quantity').value = 1; // Reset quantity
+    document.getElementById('total-price').innerText = `₦${document.getElementById('order-price').innerText.replace("₦", "")}`; // Set default amount
+}
+
+// Order item Table
+function updateTable() {
+    const tableBody = document.querySelector("#orderTable tbody");
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    let totalAmount = 0; // Initialize total amount to 0
+
+    // Rebuild the table with the current order items
+    orderItems.forEach((item, index) => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${item.serial}</td>
+            <td>${item.product}</td>
+            <td>${item.productType}</td>
+            <td>${item.quantity}</td>
+            <td>₦${item.price.toLocaleString()}</td>
+            <td>₦${item.amount.toLocaleString()}</td>
+            <td><button onclick="deleteItem(${index})">Delete</button></td>
+        `;
+
+        tableBody.appendChild(row);
+
+        // Add the item's amount to the total
+        totalAmount += item.amount;
+    });
+
+    // Update the Total Amount row in the table with the formatted total
+    document.getElementById("totalAmount").innerText = `₦${totalAmount.toLocaleString()}`;
+}
+
+function deleteItem(index) {
+    // Remove item from the orderItems array
+    orderItems.splice(index, 1);
+
+    // Renumber the remaining items
+    for (let i = 0; i < orderItems.length; i++) {
+        orderItems[i].serial = i + 1;  // assuming there's a 'serial' property
+    }
+
+    // Update the table
+    updateTable();
+}
+
+// Proceed with the order (e.g., save order and print invoice)
+
+
+// Cancel the order
+function cancelOrder() {
+    // Clear the order items
+    orderItems = [];
+    orderCount = 0;
+    updateTable();
+
+    // Hide the order table section
+    document.getElementById('orderTableSection').style.display = 'none';
+}
+
+function handleDeliverySubmit(event) {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Get all input elements within the form
+    const formElements = document.querySelectorAll('#delivery-details-form input, #delivery-details-form textarea');
+
+    // Loop through each element and set them to readonly
+    formElements.forEach((element) => {
+        element.readOnly = true; // Makes the fields read-only
+    });
+
+    // Disable the submit button after submission
+    const submitButton = document.querySelector('#delivery-details-form button[type="submit"]');
+    submitButton.disabled = true; // Disables the submit button
+    submitButton.style.display = 'none'; // Hides the submit button
+
+}
+
+
+function generateInvoice(data) {
+    document.querySelector('.header div p:nth-child(1)').textContent = `Date: ${data.date}`;
+    document.querySelector('.header div p:nth-child(3)').textContent = `#${data.invoiceNumber}`;
+    document.querySelector('.section:nth-of-type(1)').textContent = `Billed To: ${data.customerName}`;
+    
+    let tableBody = document.querySelector('.table tbody');
+    tableBody.innerHTML = '';
+    data.items.forEach(item => {
+        let row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.description}</td>
+            <td>${item.quantity}</td>
+            <td>#${item.unitPrice.toLocaleString()}</td>
+            <td>#${(item.quantity * item.unitPrice).toLocaleString()}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+    
+    document.querySelector('.total p:nth-child(1)').textContent = `Subtotal: #${data.subtotal.toLocaleString()}`;
+    document.querySelector('.total p:nth-child(2)').textContent = `Waybill: #${data.waybill.toLocaleString()}`;
+    document.querySelector('.total p:nth-child(3)').textContent = `Discount: -#${data.discount.toLocaleString()}`;
+    document.querySelector('.total p:nth-child(4) strong').textContent = `Total: #${data.total.toLocaleString()}`;
+}
+
+// Example usage
+const invoiceData = {
+    date: "04/08/2024",
+    invoiceNumber: "Nut-040824/0029",
+    customerName: "Mr Patric",
+    items: [
+        { description: "Yagi Spices (In KG) - Packaged in white border transparent pouch", quantity: 1400, unitPrice: 11100 },
+        { description: "Logistics - Transporting product from the factory to the point of way-billing", quantity: 1, unitPrice: 10000 }
+    ],
+    subtotal: 15560000,
+    waybill: 0,
+    discount: 60000,
+    total: 15500000
+};
+
+generateInvoice(invoiceData);
